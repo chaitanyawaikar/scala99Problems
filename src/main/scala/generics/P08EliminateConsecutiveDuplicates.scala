@@ -8,15 +8,17 @@ object P08EliminateConsecutiveDuplicates extends App{
 //    scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
 //  res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
 
-  def compress[T](list:List[T]) : List[T] ={
-    list.foldLeft(List[T]())(  (res,elem) =>
-      (res,elem) match {
-        case (List(),elem) => List(elem)
-        case (ls, elem) if (ls.last == elem) => ls
-        case (ls, elem) => ls:::List(elem)
-
-      })
+  def removeConsecutiveElements[T](list:List[T]) : List[T]={
+    list.foldLeft(List[T]())((result,element) =>
+      (result,element) match{
+        case (List(),element)=> List(element)
+        case (ls,element) => if(ls.last==element)
+          ls
+        else
+          ls ::: List(element)
+      }
+    )
   }
 
-  println(compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)))
+  val b = removeConsecutiveElements(List("abc","abc","abc","abc","abc","abc","def","abc"))
 }
